@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator';
-import { createAccountsService, getAllAccounts, getAccountByIdService } from '../services/account.service.js';
+import { createAccountsService, getAllAccounts, getAccountByIdService,updateAccountByIdService } from '../services/account.service.js';
 import cloudinary from '../utils/cloudinary.js';
 
 const createAccountsController = async (req, res) => {
@@ -13,26 +13,9 @@ const createAccountsController = async (req, res) => {
     }
 
     const account = req.body;
-    let imageUrl = null;
+    if(!account) return;
 
-    if (account.profileImage && account.profileImage.startsWith('data:image')) {
-      // Extraemos la parte base64 limpia
-      const base64Str = account.profileImage.split(';base64,').pop();
-
-      // Subimos a Cloudinary usando la función uploader.upload con base64
-      const uploadResult = await cloudinary.uploader.upload(`data:image/jpeg;base64,${base64Str}`, {
-        folder: 'profiles'
-      });
-
-      imageUrl = uploadResult.secure_url;
-    }
-
-    const accountData = {
-      ...account,
-      profileImage: imageUrl,
-    };
-
-    const newAccount = await createAccountsService(accountData);
+    const newAccount = await createAccountsService(account);
 
     res.status(201).json({ message: 'Cuenta creada', account: newAccount });
   } catch (error) {
@@ -65,10 +48,11 @@ const getAccountByIdController = async (req, res) => {
 
 const updateAccountByIdController = async (req, res) => {
   try {
-
+    const account = await updateAccountByIdService(req.params.id,req.body);
+    res.json(account);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 }
 
-export { createAccountsController, getAllAccountsController, getAccountByIdController };
+export { createAccountsController, getAllAccountsController, getAccountByIdController, updateAccountByIdController };
