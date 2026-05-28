@@ -1,13 +1,12 @@
 import express from 'express';
-import { register, login } from '../controllers/auth.controller.js';
+import { register, login, refresh, logout } from '../controllers/auth.controller.js';
 import { loginLimiter } from '../middlewares/ratelimiter.middleware.js';
 
 const router = express.Router();
 
-// Ruta para registrar un usuario
 router.post('/register', register);
-
-// Ruta para login
 router.post('/login', loginLimiter, login);
+router.post('/refresh', refresh);
+router.post('/logout', logout);
 
 export default router;

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
-const authSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -16,16 +16,16 @@ const authSchema = new mongoose.Schema({
         type: String,
         required: true,
     }
-});
+}, { timestamps: true });
 
-authSchema.pre('save', async function () {
+userSchema.pre('save', async function () {
     if (this.isModified('password')) {
         this.password = await bcrypt.hash(this.password, 10);
     }
 });
 
-authSchema.methods.comparePassword = function (password) {
+userSchema.methods.comparePassword = function (password) {
     return bcrypt.compare(password, this.password);
 };
 
-export default mongoose.model('User', authSchema);
+export default mongoose.model('User', userSchema);
