@@ -1,5 +1,5 @@
 import express from 'express';
-import routes from './routes/index.js';
+import routes from './infrastructure/http/routes/index.js';
 import cors from 'cors';
 import { corsOptions } from './config/cors.js';
 import cookieParser from 'cookie-parser';

@@ -47,4 +47,3 @@ process.on('uncaughtException', (error) => {
   console.error('Excepción no controlada:', error);
   process.exit(1);
 });
-

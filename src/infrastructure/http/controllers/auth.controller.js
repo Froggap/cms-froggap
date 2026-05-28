@@ -1,4 +1,17 @@
-import { registerUser, loginUser, refreshAccessToken, logoutUser } from '../services/auth.service.js';
+import { mongooseAuthRepository } from '../../database/mongoose/repositories/mongoose-auth.repository.js';
+import { hashService } from '../../external/hash.service.js';
+import { tokenService } from '../../external/token.service.js';
+
+import { createRegisterUser } from '../../../core/auth/use-cases/register.use-case.js';
+import { createLoginUser } from '../../../core/auth/use-cases/login.use-case.js';
+import { createRefreshToken } from '../../../core/auth/use-cases/refresh-token.use-case.js';
+import { createLogoutUser } from '../../../core/auth/use-cases/logout.use-case.js';
+
+// Injecting dependencies into use cases
+const registerUser = createRegisterUser(mongooseAuthRepository);
+const loginUser = createLoginUser(mongooseAuthRepository, hashService, tokenService);
+const refreshAccessToken = createRefreshToken(mongooseAuthRepository, tokenService, hashService);
+const logoutUser = createLogoutUser(mongooseAuthRepository, hashService);
 
 export const register = async (req, res) => {
   try {
@@ -30,7 +43,6 @@ export const login = async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
     }
-
 
     res.json({
       success: true,
