@@ -59,10 +59,25 @@ export const login = async (req, res) => {
 export const refresh = async (req, res) => {
   try {
     const { refreshToken } = req.cookies;
-    const result = await refreshAccessToken(refreshToken);
+    const ipAddress = req.ip;
+    const userAgent = req.headers['user-agent'];
+
+    const result = await refreshAccessToken(refreshToken, { ipAddress, userAgent });
+
+    res.cookie('refreshToken', result.refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
     res.json({
       success: true,
-      data: result
+      data: {
+        accessToken: result.accessToken,
+        user: result.user
+      }
     });
   } catch (error) {
     res.status(401).json({ success: false, message: error.message });
@@ -73,6 +88,14 @@ export const logout = async (req, res) => {
   try {
     const { refreshToken } = req.cookies;
     await logoutUser(refreshToken);
+    
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+    });
+
     res.json({
       success: true,
       message: 'Sesión cerrada correctamente'
