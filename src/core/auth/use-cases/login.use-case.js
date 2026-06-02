@@ -1,5 +1,8 @@
+import authValidatorLogin from "../../../infrastructure/http/validators/auth.validator";
+
 export const createLoginUser = (authRepository, hashService, tokenService) => {
   return async ({ email, password, ipAddress, userAgent }) => {
+
     const user = await authRepository.findByEmail(email);
     
     if (!user || !(await user.comparePassword(password))) {
