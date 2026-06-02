@@ -1,4 +1,3 @@
-import authValidatorLogin from "../../../infrastructure/http/validators/auth.validator";
 
 export const createLoginUser = (authRepository, hashService, tokenService) => {
   return async ({ email, password, ipAddress, userAgent }) => {
