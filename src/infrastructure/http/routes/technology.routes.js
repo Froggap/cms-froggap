@@ -1,9 +1,12 @@
 import express from "express";
-import { authMiddleware } from "../middlewares/auth.middleware.js";
-import { technologyController } from "../controllers/technology.controller.js";
+import { save, remove, getAll, getById, update } from "../controllers/technology.controller.js";
 
 const router = express.Router();
 
-router.post('/save', technologyController)
+router.get('/all', getAll)
+router.get('/:id', getById)
+router.post('/save', save)
+router.put('/update/:id', update)
+router.delete('/delete/:id', remove)
 
 export default router;
