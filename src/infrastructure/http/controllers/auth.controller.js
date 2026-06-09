@@ -16,7 +16,7 @@ const logoutUser = createLogoutUser(mongooseAuthRepository, hashService);
 export const register = async (req, res) => {
   try {
     const user = await registerUser(req.body);
-    res.status(201).json({ 
+    res.status(201).json({
       success: true,
       message: 'Usuario registrado correctamente',
       data: { id: user._id, username: user.username, email: user.email }
@@ -33,8 +33,8 @@ export const login = async (req, res) => {
     const userAgent = req.headers['user-agent'];
 
     const session = await loginUser({ email, password, ipAddress, userAgent });
-  
-    if(session.refreshToken) {
+
+    if (session.refreshToken) {
       res.cookie('refreshToken', session.refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
@@ -80,7 +80,15 @@ export const refresh = async (req, res) => {
       }
     });
   } catch (error) {
-    res.status(401).json({ success: false, message: error.message });
+    if (error.code === 'INVALID_SESSION') {
+      res.clearCookie('refreshToken', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/',
+      });
+    }
+    res.status(401).json({ success: false, code:error?.code ?? undefined, message: error.message });
   }
 };
 
@@ -88,7 +96,7 @@ export const logout = async (req, res) => {
   try {
     const { refreshToken } = req.cookies;
     await logoutUser(refreshToken);
-    
+
     res.clearCookie('refreshToken', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

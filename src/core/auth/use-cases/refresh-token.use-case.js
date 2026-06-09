@@ -1,12 +1,18 @@
 export const createRefreshToken = (authRepository, tokenService, hashService) => {
   return async (oldRefreshToken, { ipAddress, userAgent }) => {
-    if (!oldRefreshToken) throw new Error('Refresh token requerido');
+    if (!oldRefreshToken) {
+      const error = new Error('Refresh token requerido');
+      error.code = 'MISSING_REFRESH_TOKEN';
+      throw error;
+    }
 
     const oldHashedToken = hashService.hashToken(oldRefreshToken);
     const session = await authRepository.findValidSessionByToken(oldHashedToken);
 
     if (!session || !session.user) {
-      throw new Error('Sesión inválida o expirada');
+      const error = new Error('Sesión inválida o expirada');
+      error.code = 'INVALID_SESSION';
+      throw error;
     }
 
     await authRepository.invalidateSession(oldHashedToken);

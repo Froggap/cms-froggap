@@ -4,6 +4,7 @@ export const technologyUseCase = (cmsRepository) => {
             const technology = await cmsRepository.saveTechnology({name, technologies, tags});
             return technology;
         } catch (error) {
+            console.error('Error saving technology:', error);
             throw new Error("Error saving technology");
         }
     }

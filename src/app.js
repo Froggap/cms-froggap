@@ -1,10 +1,13 @@
 import express from 'express';
+import morgan from 'morgan';
 import routes from './infrastructure/http/routes/index.js';
 import cors from 'cors';
 import { corsOptions } from './config/cors.js';
 import cookieParser from 'cookie-parser';
 
 const app = express();
+
+app.use(morgan('dev'));
 
 // Configuración de Middlewares globales
 app.use(cookieParser());
@@ -40,4 +43,6 @@ app.use((err, req, res, _next) => {
 });
 
 export default app;
+
+
 
