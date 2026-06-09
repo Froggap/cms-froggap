@@ -1,8 +1,8 @@
 import {cmsRepository} from "../../database/mongoose/repositories/mongoose-main-section.repository.js"
-import {saveMainSection} from "../../../core/cms/use-cases/save-main-section.use-case.js"
-import {getMainSection} from "../../../core/cms/use-cases/get-main-section.use-case.js"
-import {updateMainSection} from "../../../core/cms/use-cases/update-main-section.use-case.js"
-import {deleteMainSection} from "../../../core/cms/use-cases/delete-main-section.use-case.js"
+import {saveMainSection} from "../../../core/main-section/save-main-section.use-case.js"
+import {getMainSection} from "../../../core/main-section/get-main-section.use-case.js"
+import {updateMainSection} from "../../../core/main-section/update-main-section.use-case.js"
+import {deleteMainSection} from "../../../core/main-section/delete-main-section.use-case.js"
 
 const saveMainSectionUseCase = saveMainSection(cmsRepository);
 const getMainSectionUseCase = getMainSection(cmsRepository);

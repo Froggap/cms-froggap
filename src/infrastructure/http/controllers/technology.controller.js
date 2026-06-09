@@ -1,8 +1,8 @@
-import { technologyUseCase } from "../../../core/cms/use-cases/save-technology.use-case.js";
-import { deleteTechnology } from "../../../core/cms/use-cases/delete-technology.use-case.js";
-import { updateTechnology } from "../../../core/cms/use-cases/update-technology.use-case.js";
-import { getAllTechnologies } from "../../../core/cms/use-cases/get-all-technologies.use-case.js";
-import { getTechnologyById } from "../../../core/cms/use-cases/get-technology-by-id.use-case.js";
+import { technologyUseCase } from "../../../core/technology/save-technology.use-case.js";
+import { deleteTechnology } from "../../../core/technology/delete-technology.use-case.js";
+import { updateTechnology } from "../../../core/technology/update-technology.use-case.js";
+import { getAllTechnologies } from "../../../core/technology/get-all-technologies.use-case.js";
+import { getTechnologyById } from "../../../core/technology/get-technology-by-id.use-case.js";
 import { technologyRepository } from "../../database/mongoose/repositories/moongose-technology.repository.js";
 
 const saveTechnologyUseCase = technologyUseCase(technologyRepository);
