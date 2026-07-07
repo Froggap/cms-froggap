@@ -3,11 +3,11 @@ import Session from '../models/session.model.js';
 
 export const mongooseAuthRepository = {
   findByEmailOrUsername: (email, username) => {
-    return User.findOne({ $or: [{ email }, { username }] });
+    return User.findOne({ $or: [{ email }, { username }] }).exec();
   },
 
   findByEmail: (email) => {
-    return User.findOne({ email });
+    return User.findOne({ email }).exec();
   },
 
   saveUser: (userData) => {

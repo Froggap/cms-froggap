@@ -1,20 +1,20 @@
-import Job  from "../models/job.model.js";
+import Job from "../models/job.model.js";
 
-export const jobRepository= {
-    findAll: async () => {
-        return await Job.find({active:true})
+export const jobRepository = {
+    findAll: () => {
+        return Job.find({ active: true }).exec();
     },
-    findById: async (id) => {
-        return await Job.findById(id)
+    findById:(id) => {
+        return Job.findById(id).exec();
     },
-    updateJob: async (id, data) => {
-        return await Job.findByIdAndUpdate(id, data, { new: true })
+    updateJob:(id, data) => {
+        return Job.findByIdAndUpdate(id, data, { new: true }).exec();
     },
-    deleteJob: async (id) => {
-        return await Job.findByIdAndDelete(id)
+    deleteJob:(id) => {
+        return Job.findByIdAndDelete(id).exec();
     },
-    createJob: async (data) => {
+    createJob:(data) => {
         const job = new Job(data);
-        return await job.save();
+        return job.save();
     }
 }

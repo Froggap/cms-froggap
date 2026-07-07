@@ -1,7 +1,7 @@
 export const technologyUseCase = (cmsRepository) => {
-    return async ({name, technologies, tags}) => {
+    return async (technologyData) => {
         try {
-            const technology = await cmsRepository.saveTechnology({name, technologies, tags});
+            const technology = await cmsRepository.saveTechnology(technologyData);
             return technology;
         } catch (error) {
             console.error('Error saving technology:', error);
