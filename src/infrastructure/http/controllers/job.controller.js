@@ -1,8 +1,8 @@
-import { getAllJobs } from "../../../core/job/get-all-job.use-case.js";
-import {getById} from "../../../core/job/get-by-id.use-case.js"
-import { createJob } from "../../../core/job/create-job.use-case.js";
+import { getAllJobs } from "../../../core/job/use-cases/get-all-job.use-case.js";
+import {getById} from "../../../core/job/use-cases/get-by-id.use-case.js";
+import { createJob } from "../../../core/job/use-cases/create-job.use-case.js";
+import { updateJob } from "../../../core/job/use-cases/update-job.user-case.js";
 import { jobRepository } from "../../database/mongoose/repositories/job.repository.js";
-import { updateJob } from "../../../core/job/update-job.user-case.js";
 const getAllJobsUseCase = getAllJobs(jobRepository);
 const getByIdUseCase = getById(jobRepository);
 const createJobUseCase = createJob(jobRepository);

@@ -1,5 +1,5 @@
-import { createBlog } from "../../../core/blog/create.use-case.js";
-import { findAllBlogs } from "../../../core/blog/find-all.use-case.js";
+import { createBlog } from "../../../core/blog/use-cases/create.use-case.js";
+import { findAllBlogs } from "../../../core/blog/use-cases/find-all.use-case.js";
 import { blogRepository } from "../../database/mongoose/repositories/blog.repository.js";
 
 const getAllBlogUseCase = findAllBlogs(blogRepository);
