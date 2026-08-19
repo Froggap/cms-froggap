@@ -1,30 +1,32 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const technologySchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
-        unique:true
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  technologies: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      icon: {
+        type: String,
+        default: null,
+      },
+      active: {
+        type: Boolean,
+        default: true,
+      },
     },
-    technologies:[{
-        name:{
-            type:String,
-            required:true
-        },
-        icon:{
-            type:String,
-            required:true
-        },
-        active:{
-            type:Boolean,
-            default:true
-        }
-    }],
-    tags:[String],
-    active:{
-        type:Boolean,
-        default:true
-    }
-})
+  ],
+  tags: [String],
+  active: {
+    type: Boolean,
+    default: true,
+  },
+});
 
-export default mongoose.model('Technology', technologySchema); 
+export default mongoose.model("Technology", technologySchema);
