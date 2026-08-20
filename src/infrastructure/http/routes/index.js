@@ -4,13 +4,11 @@ import mainSectionRoutes from './main-section.routes.js';
 import technologyRoutes from './technology.routes.js';
 import jobRoutes from './job.routes.js';
 import blogRoutes from './blog.route.js';
-import { authMiddleware } from '../middlewares/auth.middleware.js';
-
 const router = express.Router();
 
 router.use('/auth', authRoutes);
-router.use('/mainSection', authMiddleware, mainSectionRoutes);
-router.use('/technology', authMiddleware, technologyRoutes);
-router.use('/job', authMiddleware, jobRoutes);
-router.use('/blog', authMiddleware, blogRoutes);
+router.use('/mainSection', mainSectionRoutes);
+router.use('/technology', technologyRoutes);
+router.use('/job', jobRoutes);
+router.use('/blog', blogRoutes);
 export default router;

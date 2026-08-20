@@ -4,9 +4,9 @@ import { authMiddleware } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
-router.get('/', authMiddleware, getAllBlogsController)
+router.get('/', getAllBlogsController)
 router.post('/create', authMiddleware, createBlogController)
-router.get('/:id', authMiddleware, getBlogByIdController)
+router.get('/:id', getBlogByIdController)
 router.patch('/:id', authMiddleware, updateBlogController)
 
 export default router;
