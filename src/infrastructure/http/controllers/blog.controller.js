@@ -4,6 +4,7 @@ import { getBlogById } from "../../../core/blog/use-cases/get-by-id.use-case.js"
 import { blogRepository } from "../../database/mongoose/repositories/blog.repository.js";
 import { updateBlog } from "../../../core/blog/use-cases/update.use-case.js";
 
+
 const getAllBlogUseCase = findAllBlogs(blogRepository);
 const createBlogUseCase = createBlog(blogRepository);
 const getBlogByIdUseCase = getBlogById(blogRepository);
@@ -41,11 +42,12 @@ export const updateBlogController = async (req, res) => {
 }
 
 export const createBlogController = async (req, res) => {
-    try {
-        const blog = req.body;
-        const newBlog = await createBlogUseCase(blog);
-        return res.json({ success: true, data: newBlog });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
+  try {
+    const blog = req.body;
+    const userId = req.user.id;
+    const newBlog = await createBlogUseCase({ ...blog, author: userId });
+    return res.json({ success: true, data: newBlog });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 }
